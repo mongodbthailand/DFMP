@@ -1,0 +1,8 @@
+use("test");
+db.getCollection("bookings").insertMany([
+  { place: "วัดร่องขุ่น", province: "เชียงราย", region: "ภาคเหนือ", joined: 2564 },
+  { place: "วัดหลวง", province: "ปาย", region: "ภาคเหนือ", joined: 2566 },
+  { place: "แหลมพรหมเทพ", province: "ภูเก็ต", region: "ภาคใต้", joined: 2566 },
+  { place: "วัดโพธิ์", province: "กรุงเทพ", region: "ภาคกลาง", joined: 2565 },
+  { place: "ดอยสุเทพ", province: "เชียงใหม่", region: "ภาคเหนือ", joined: 2563 },
+]);
