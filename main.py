@@ -14,7 +14,7 @@ app = FastAPI(title="DFMP API")
 def startup_db_client():
     uri = os.getenv('ATLAS_URI')
     if uri is None:
-        uri = "mongodb+srv://mdbadmin:passwordone@demo.wgxwehq.mongodb.net/"
+        uri = "mongodb://localhost:27017"
     try:
         app.mongodb = MongoClient(uri, server_api=ServerApi('1'))
         app.db = app.mongodb["test"]
