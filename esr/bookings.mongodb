@@ -1,8 +1,40 @@
-use("test");
-db.getCollection("bookings").insertMany([
-  { place: "วัดร่องขุ่น", province: "เชียงราย", region: "ภาคเหนือ", joined: 2564 },
-  { place: "วัดหลวง", province: "ปาย", region: "ภาคเหนือ", joined: 2566 },
-  { place: "แหลมพรหมเทพ", province: "ภูเก็ต", region: "ภาคใต้", joined: 2566 },
-  { place: "วัดโพธิ์", province: "กรุงเทพ", region: "ภาคกลาง", joined: 2565 },
-  { place: "ดอยสุเทพ", province: "เชียงใหม่", region: "ภาคเหนือ", joined: 2563 },
+db.getSiblingDB("test").bookings.drop();
+db.getSiblingDB("test").bookings.insertMany([
+  {
+    place: "วัดร่องขุ่น",
+    province: "เชียงราย",
+    region: "ภาคเหนือ",
+    visited: 2564,
+  },
+  { place: "วัดหลวง", province: "ปาย", region: "ภาคเหนือ", visited: 2566 },
+  { place: "แหลมพรหมเทพ", province: "ภูเก็ต", region: "ภาคใต้", visited: 2566 },
+  { place: "วัดโพธิ์", province: "กรุงเทพ", region: "ภาคกลาง", visited: 2565 },
+  {
+    place: "ดอยสุเทพ",
+    province: "เชียงใหม่",
+    region: "ภาคเหนือ",
+    visited: 2565,
+  },
 ]);
+
+// Equality before sort
+db.getSiblingDB("test").bookings.createIndex({ place: 1, region: 1 }); // n=3,k=5,d=5, Good
+db.getSiblingDB("test").bookings.createIndex({ region: 1, place: 1 }); // n=3,k=3,d=3, Better
+db.getSiblingDB("test")
+  .bookings.find({ region: "ภาคเหนือ" })
+  .sort({ place: 1 });
+
+// Equality before range
+db.getSiblingDB("test").bookings.createIndex({ visited: 1, region: 1 }); // n=2,k=4,d=2, Good
+db.getSiblingDB("test").bookings.createIndex({ region: 1, visited: 1 }); // n=2,k=2,d=2, Better
+db.getSiblingDB("test").bookings.find({
+  region: "ภาคเหนือ",
+  visited: { $gt: 2564 },
+});
+
+// Sort before range
+db.getSiblingDB("test").bookings.createIndex({ visited: 1, region: 1 }); // n=4,k=4,d=4, Good (Sort in memeory)
+db.getSiblingDB("test").bookings.createIndex({ region: 1, visited: 1 }); // n=4,k=5,d=5, Better (Sort in index)
+db.getSiblingDB("test")
+  .bookings.find({ visited: { $gt: 2564 } })
+  .sort({ region: 1 });

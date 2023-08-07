@@ -2,5 +2,4 @@ fastapi[all]
 pymongo[srv]
 python-dateutil
 pydantic
-motor
 uvicorn[standard]
