@@ -4,3 +4,4 @@
 [References](https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/)
 
 ### (E)quality, (S)ort, (R)ange rules
+[References](https://www.mongodb.com/docs/upcoming/tutorial/equality-sort-range-rule/)
