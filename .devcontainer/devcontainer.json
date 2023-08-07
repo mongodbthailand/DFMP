@@ -20,7 +20,6 @@
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [8000],
-  // "appPort": [8000],
   "runArgs": ["-p=8000:8000"],
   "postCreateCommand": "python -m pip install --upgrade pip && python -m pip install -r requirements.txt",
   "postAttachCommand": "uvicorn main:app --reload --host=0.0.0.0 --port=8000",
