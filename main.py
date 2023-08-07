@@ -1,5 +1,6 @@
-from fastapi import FastAPI, APIRouter, Body, Request, Response, HTTPException, status
+from fastapi import FastAPI, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
+
 from typing import List
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -8,7 +9,6 @@ from bson.objectid import ObjectId
 import os
 
 app = FastAPI(title="DFMP API")
-
 
 @app.on_event("startup")
 def startup_db_client():
